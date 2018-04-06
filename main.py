@@ -8,19 +8,35 @@ def main():
     solver = pywrapcp.Solver("schedule_shifts")
 
     num_nurses = 4
-    num_shifts = 4     # Nurse assigned to shift 0 means not working that day. Num of actual shifts is num_shifts-1
+    num_shifts = 4     # Nurse assigned to shift 0 means not working that day.
     num_days = 7
     # [START]
     # Create shift variables.
     shifts = {}
-
+    # shifts is:
+    #         mon / tue / wed / thu / fri / sat / sun
+    # nurse1   x     x    etc.                              where x is number of shift assigned, 0 means no shift
+    # nurse2   x     x
+    # nurse3   x     x
+    # nurse4   x     x
+    # ...
     for j in range(num_nurses):
         for i in range(num_days):
             shifts[(j, i)] = solver.IntVar(0, num_shifts - 1, "shifts(%i,%i)" % (j, i))
     shifts_flat = [shifts[(j, i)] for j in range(num_nurses) for i in range(num_days)]
 
+
+    
     # Create nurse variables.
     nurses = {}
+    # nurses is:
+    #         mon / tue / wed / thu / fri / sat / sun
+    # shift1   x     x    etc.                              where x is number of nurse assigned
+    # shift2   x     x
+    # shift3   x     x
+    # shift4   x     x
+    # ...
+    #TODO change rhis table to hold more than one nurse on a shift
 
     for j in range(num_shifts):
         for i in range(num_days):
