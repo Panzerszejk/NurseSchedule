@@ -7,9 +7,11 @@ def main():
     # Creates the solver.
     solver = pywrapcp.Solver("schedule_shifts")
 
-    num_nurses = 4
-    num_shifts = 4     # Nurse assigned to shift 0 means not working that day.
+    num_nurses = 16
+    num_shifts = 5     # Nurse assigned to shift 0 means not working that day.
     num_days = 7
+    #TODO change number of days to more than one week
+    #TODO add dependancy from a previous week
     # [START]
     # Create shift variables.
     shifts = {}
@@ -36,7 +38,6 @@ def main():
     # shift3   x     x
     # shift4   x     x
     # ...
-    #TODO change rhis table to hold more than one nurse on a shift
 
     for j in range(num_shifts):
         for i in range(num_days):
@@ -54,16 +55,17 @@ def main():
         solver.Add(solver.AllDifferent([nurses[(j, i)] for j in range(num_shifts)]))
     # Each nurse works 5 or 6 days in a week.
     for j in range(num_nurses):
+
         solver.Add(solver.Sum([shifts[(j, i)] > 0 for i in range(num_days)]) >= 5)
         solver.Add(solver.Sum([shifts[(j, i)] > 0 for i in range(num_days)]) <= 6)
+    #TODO change nurses to work according to their max hour schedule
+
     # Create works_shift variables. works_shift[(i, j)] is True if nurse
     # i works shift j at least once during the week.
     works_shift = {}
-
     for i in range(num_nurses):
         for j in range(num_shifts):
             works_shift[(i, j)] = solver.BoolVar('shift%d nurse%d' % (i, j))
-
     for i in range(num_nurses):
         for j in range(num_shifts):
             solver.Add(works_shift[(i, j)] == solver.Max([shifts[(i, k)] == j for k in range(num_days)]))
@@ -71,16 +73,20 @@ def main():
     # For each shift (other than 0), at most 2 nurses are assigned to that shift
     # during the week.
     for j in range(1, num_shifts):
-        solver.Add(solver.Sum([works_shift[(i, j)] for i in range(num_nurses)]) <= 2)
+        if j == 4:
+            solver.Add(solver.Sum([works_shift[(i, j)] for i in range(num_nurses)]) == 1)
+        else:
+            solver.Add(solver.Sum([works_shift[(i, j)] for i in range(num_nurses)]) == 3)
+
     # If s nurses works shifts 2 or 3 on, he must also work that shift the previous
     # day or the following day.
-    solver.Add(solver.Max(nurses[(2, 0)] == nurses[(2, 1)], nurses[(2, 1)] == nurses[(2, 2)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 1)] == nurses[(2, 2)], nurses[(2, 2)] == nurses[(2, 3)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 2)] == nurses[(2, 3)], nurses[(2, 3)] == nurses[(2, 4)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 3)] == nurses[(2, 4)], nurses[(2, 4)] == nurses[(2, 5)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 4)] == nurses[(2, 5)], nurses[(2, 5)] == nurses[(2, 6)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 5)] == nurses[(2, 6)], nurses[(2, 6)] == nurses[(2, 0)]) == 1)
-    solver.Add(solver.Max(nurses[(2, 6)] == nurses[(2, 0)], nurses[(2, 0)] == nurses[(2, 1)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 0)] == nurses[(4, 1)], nurses[(4, 1)] == nurses[(4, 2)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 1)] == nurses[(4, 2)], nurses[(4, 2)] == nurses[(4, 3)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 2)] == nurses[(4, 3)], nurses[(4, 3)] == nurses[(4, 4)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 3)] == nurses[(4, 4)], nurses[(4, 4)] == nurses[(4, 5)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 4)] == nurses[(4, 5)], nurses[(4, 5)] == nurses[(4, 6)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 5)] == nurses[(4, 6)], nurses[(4, 6)] == nurses[(4, 0)]) == 1)
+    solver.Add(solver.Max(nurses[(4, 6)] == nurses[(4, 0)], nurses[(4, 0)] == nurses[(4, 1)]) == 1)
 
     solver.Add(solver.Max(nurses[(3, 0)] == nurses[(3, 1)], nurses[(3, 1)] == nurses[(3, 2)]) == 1)
     solver.Add(solver.Max(nurses[(3, 1)] == nurses[(3, 2)], nurses[(3, 2)] == nurses[(3, 3)]) == 1)
@@ -89,6 +95,10 @@ def main():
     solver.Add(solver.Max(nurses[(3, 4)] == nurses[(3, 5)], nurses[(3, 5)] == nurses[(3, 6)]) == 1)
     solver.Add(solver.Max(nurses[(3, 5)] == nurses[(3, 6)], nurses[(3, 6)] == nurses[(3, 0)]) == 1)
     solver.Add(solver.Max(nurses[(3, 6)] == nurses[(3, 0)], nurses[(3, 0)] == nurses[(3, 1)]) == 1)
+
+
+
+
     # Create the decision builder.
     db = solver.Phase(shifts_flat, solver.CHOOSE_FIRST_UNBOUND,
                       solver.ASSIGN_MIN_VALUE)
@@ -110,7 +120,7 @@ def main():
         for i in range(num_days):
             print("Day", i)
             for j in range(num_nurses):
-                print("Nurse", j, "assigned to task",
+                print("Nurse", j, "assigned to shift",
                       collector.Value(sol, shifts[(j, i)]))
             print()
 
