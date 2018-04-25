@@ -1,6 +1,6 @@
 from tkinter import *
 import tkinter as tk
-import Array
+from .Array import Array
 
 
 class View(tk.Frame):
