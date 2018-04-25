@@ -1,5 +1,5 @@
 class Importer:
-
+    @staticmethod
     def doimport(self):
         f = open('test.txt', 'r')
         days = []
@@ -11,10 +11,8 @@ class Importer:
                 nurse = []
                 for i in range(0, len(line)):
                     nurse.append(line[i])
-                    
                 days.append(nurse)
                 print(days)
-
         return days
 
 
