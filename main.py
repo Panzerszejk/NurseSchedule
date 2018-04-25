@@ -9,8 +9,7 @@ def main():
 
     num_nurses = 16
     num_shifts = 5     # Nurse assigned to shift 0 means not working that day.
-    num_days = 7
-    #TODO change number of days to more than one week
+    num_days = 35
     #TODO add dependancy from a previous week
     # [START]
     # Create shift variables.
@@ -18,15 +17,17 @@ def main():
     # shifts is:
     #         mon / tue / wed / thu / fri / sat / sun
     # nurse1   x     x    etc.                              where x is number of shift assigned, 0 means no shift
-    # nurse2   x     x
-    # nurse3   x     x
-    # nurse4   x     x
-    # ...
+    # nurse2   x     x                                      shift 1 is earl shift
+    # nurse3   x     x                                      shift 2 is day shift
+    # nurse4   x     x                                      shift 3 is late shift
+    # ...                                                   shift 4 is night shift
+
     for j in range(num_nurses):
         for i in range(num_days):
             shifts[(j, i)] = solver.IntVar(0, num_shifts - 1, "shifts(%i,%i)" % (j, i))
+            #shifts will get assigned values from solver, with range 0 to num_shifts-1 tagged as "shifts(j,i)"
     shifts_flat = [shifts[(j, i)] for j in range(num_nurses) for i in range(num_days)]
-
+    #creating a flat list to later help the solver
 
     
     # Create nurse variables.
@@ -38,10 +39,14 @@ def main():
     # shift3   x     x
     # shift4   x     x
     # ...
-
+    #                                                       nurse number 0-10  - full-time nurses
+    #                                                       nurse number 11    - 32 hour nurse
+    #                                                       nurse number 12-15 - part-time nurse
     for j in range(num_shifts):
         for i in range(num_days):
             nurses[(j, i)] = solver.IntVar(0, num_nurses - 1, "shift%d day%d" % (j,i))
+            #nurses will get assigned values from solver, with range from 0 to num_nurses-1 tagged as "shift%j day%i"
+
     # Set relationships between shifts and nurses.
     for day in range(num_days):
         nurses_for_day = [nurses[(j, day)] for j in range(num_shifts)]
@@ -49,6 +54,7 @@ def main():
         for j in range(num_nurses):
             s = shifts[(j, day)]
             solver.Add(s.IndexOf(nurses_for_day) == j)
+
     # Make assignments different on each day
     for i in range(num_days):
         solver.Add(solver.AllDifferent([shifts[(j, i)] for j in range(num_nurses)]))
