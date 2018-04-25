@@ -1,4 +1,4 @@
-import View
+from .View import View
 import tkinter as tk
 
 
