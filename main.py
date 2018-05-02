@@ -3,6 +3,8 @@ from .src.ScheduleDisplayer import ScheduleDisplayer
 from .src.Nurse import Nurse
 from .src.Ward import Ward
 from .src.Constraint import Constraint
+from .src.ConstraintChecker import ConstraintChecker
+
 
 def main():
     ward = Ward()
@@ -35,6 +37,11 @@ def main():
     weekImported = handler.importer("week")      #returns week object with imported data
     MainSchedule1 = handler.generate(ward, schedImported) #returns schedule object with data generated using imported schedule
     MainSchedule2 = handler.generate(ward, weekImported)  #returns schedule object with data generated using imported week
+
+    softchecker = ConstraintChecker(ward,MainSchedule1,weekImported) #checking soft constraints for MainSchedule1
+    softchecker.check()
+    weight = softchecker.get_totalWeight()      #total weight of unfulfilled soft constraints, less is better
+
 
     displayer = ScheduleDisplayer(MainSchedule1)
     displayer.display()
