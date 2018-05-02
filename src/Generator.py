@@ -1,18 +1,16 @@
-from Schedule import Schedule
+from .Schedule import Schedule
+from .Week import Week
+
 
 class Generator:
-    
-    def generate(self):
-        pass
-    
-    def generate(self, schedule):
-        if isinstance(schedule, Schedule):
-            print('git')
-        else:
-            print('niegit')
+    def generate(self, schedule=None):
+        if schedule is None:
+            pass
+            #code for no parameter call
+        elif isinstance(schedule, Week):
+            week=schedule  #namechange for consistency, not necessary
+            #code for week parameter call
+        elif isinstance(schedule, Schedule):
+            pass
+            #code for schedule parameter call
 
-    def generate(self, week):
-        if isinstance(week, Week):
-             print('git')
-        else:
-            print('niegit')           

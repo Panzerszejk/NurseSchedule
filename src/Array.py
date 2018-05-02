@@ -1,5 +1,3 @@
-
-
 class Array:
     tablica = [["P1","Poniedzialek","D"],
                ["P2","Wtorek","D"],

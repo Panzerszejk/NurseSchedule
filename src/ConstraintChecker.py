@@ -14,9 +14,9 @@ class ConstraintChecker:
                 for day in range(35):
                     if day % 7 == 4:  #jest piątek
                         shiftcount = 0
-                        friday = self.schedule[day][nurse]
-                        saturday = self.schedule[day+1][nurse]
-                        sunday = self.schedule[day+2][nurse]
+                        friday = self.schedule.ScheduleList[day][nurse]
+                        saturday = self.schedule.ScheduleList[day+1][nurse]
+                        sunday = self.schedule.ScheduleList[day+2][nurse]
                         if friday == 'L':
                             shiftcount += 1
                         if friday == 'N':

@@ -1,5 +1,4 @@
 class ScheduleHandler:
-    #def import jest błedne, podkresla
     def importer(self):
         pass
     def export(self):

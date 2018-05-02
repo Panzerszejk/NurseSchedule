@@ -9,7 +9,7 @@ class View(tk.Frame):
         _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
         y=0
         for x in range(0,16):
-            nazwa = tk.Label(master,text=Array.Array.tablica[x][0], bd=1, relief=SOLID)
+            nazwa = tk.Label(master,text=Array.tablica[x][0], bd=1, relief=SOLID)
             nazwa.place(x=260+y,y=50,width=40,height=20)
             y=y+49
 
@@ -35,11 +35,11 @@ class View(tk.Frame):
                 lbl = tk.Label(frame,relief=SOLID, bd=1)
                 lbl.grid(row=x,column=i+1,ipadx=18)
 
-                if str(Array.Array.tablica[i][2]) == "D" and str(Array.Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.Array.tablica[i][1])==str(_dni[x%7]):
+                if str(Array.tablica[i][2]) == "D" and str(Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.tablica[i][1])==str(_dni[x%7]):
                     lbl.configure(text="D")
-                elif str(Array.Array.tablica[i][2]) == "E" and str(Array.Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.Array.tablica[i][1])==str(_dni[x%7]):
+                elif str(Array.tablica[i][2]) == "E" and str(Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.tablica[i][1])==str(_dni[x%7]):
                     lbl.configure(text="E")
-                elif str(Array.Array.tablica[i][2]) == "N" and str(Array.Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.Array.tablica[i][1])==str(_dni[x%7]):
+                elif str(Array.tablica[i][2]) == "N" and str(Array.tablica[i][0].split('P')[1]) == str(i+1) and str(Array.tablica[i][1])==str(_dni[x%7]):
                     lbl.configure(text="N")
                 else:
                     lbl.configure(text=3*" ")
