@@ -26,11 +26,11 @@ def main():
     ward.add_nurse(Nurse(15,"Jagoda","Malinowska",13,12,True))
 
     ward.add_constraint(Constraint(1,1000))
-    ward.add_constraint(Constraint(1,1000))
-    ward.add_constraint(Constraint(1,100))
-    ward.add_constraint(Constraint(1,10))
-    ward.add_constraint(Constraint(1,10))
-    ward.add_constraint(Constraint(1,1))
+    ward.add_constraint(Constraint(3,1000))
+    ward.add_constraint(Constraint(5,100))
+    ward.add_constraint(Constraint(7,10))
+    ward.add_constraint(Constraint(9,10))
+    ward.add_constraint(Constraint(13,1))
 
     handler = ScheduleHandler()
     schedImported = handler.importer("schedule") #returns schedule object with imported data
