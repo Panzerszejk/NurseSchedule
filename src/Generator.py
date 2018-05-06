@@ -3,7 +3,6 @@ from .Week import Week
 
 
 class Generator:
-    @staticmethod
     def generate(self, ward, sched=None):
         output = Schedule() #write data to output object
         if sched is None:

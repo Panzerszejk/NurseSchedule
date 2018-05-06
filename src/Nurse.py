@@ -1,7 +1,8 @@
 class Nurse:
-    def __init__(self, number, name, maxShifts, minShifts, workingNights=True):
+    def __init__(self, number, name, surname, maxShifts, minShifts, workingNights=True):
         self.number = number
         self.name = name
+        self.surname = surname
         self.maxShifts = maxShifts
         self.minShifts = minShifts
         self.workingNights = workingNights

@@ -1,9 +1,9 @@
-from .src.ScheduleHandler import ScheduleHandler
-from .src.ScheduleDisplayer import ScheduleDisplayer
-from .src.Nurse import Nurse
-from .src.Ward import Ward
-from .src.Constraint import Constraint
-from .src.ConstraintChecker import ConstraintChecker
+from src.ScheduleHandler import ScheduleHandler
+from src.ScheduleDisplayer import ScheduleDisplayer
+from src.Nurse import Nurse
+from src.Ward import Ward
+from src.Constraint import Constraint
+from src.ConstraintChecker import ConstraintChecker
 
 
 def main():

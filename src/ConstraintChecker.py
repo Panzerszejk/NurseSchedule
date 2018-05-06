@@ -44,7 +44,7 @@ class ConstraintChecker:
                     else:
                         break
                 for day in range(35):
-                    currentday = self.schedule[day][nurse]
+                    currentday = self.schedule.scheduleList[day][nurse]
                     if currentday == 'N':
                         nightseries+=1
                     else:

@@ -7,25 +7,28 @@ from .Exporter import Exporter
 
 class ScheduleHandler:
     def importer(self, var):
+        imp = Importer()
         if var == "week":
             sched = Week()
-            sched.importedWeek = Importer.doimport()
+            sched.importedWeek = imp.doimport()
         elif var == "schedule":
             sched = Schedule()
-            sched.importedSchedule = Importer.doimport()
+            sched.importedSchedule = imp.doimport()
         else:
             sched = None
             print("No argument given")
         return sched
 
     def export(self, sched):  #sched is a class Schedule object
-        Exporter.export(sched)
+        exp = Exporter()
+        exp.export(sched)
 
     def generate(self, ward, imported = None):  #imported is a class Schedule or Week object, can be Null
+        gen = Generator()
         if imported is None:
-            return Generator.generate(ward)
+            return gen.generate(ward)
         else:
-            return Generator.generate(ward,imported)
+            return gen.generate(ward,imported)
 
     def accept(self):
         pass

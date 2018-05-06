@@ -1,5 +1,4 @@
 class Importer:
-    @staticmethod
     def doimport(self):
         f = open('test.txt', 'r')
         days = []
