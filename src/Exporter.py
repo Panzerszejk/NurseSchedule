@@ -1,3 +1,3 @@
 class Exporter:
-    def export(self):
+    def export(self, sched):  #sched is a class Schedule object
         pass

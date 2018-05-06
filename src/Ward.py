@@ -28,3 +28,7 @@ class Ward:
     def sort_constraints(self):
         __temp__=sorted(self.constraints, key=lambda constraint: constraint.number)
         self.constraints=__temp__
+
+    def print_initials(self,number):
+        return(self.nurses[number].name[0],self.nurses[number].surname[0])
+
