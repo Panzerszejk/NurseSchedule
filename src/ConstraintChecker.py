@@ -26,7 +26,7 @@ class ConstraintChecker:
                         shiftcount += 1
                     if sunday != '-':
                         shiftcount += 1
-                    if 3 > shiftcount > 0:
+                    if 2 > shiftcount > 0:
                         self.totalWeight += self.ward.constraints[0].weight
         #third constraint
         for nurse in range(16):

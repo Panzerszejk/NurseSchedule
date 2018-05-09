@@ -4,9 +4,20 @@ from src.Nurse import Nurse
 from src.Ward import Ward
 from src.Constraint import Constraint
 from src.ConstraintChecker import ConstraintChecker
+from src.View import View
+import tkinter as tk
 
 
-def main():
+if __name__ == "__main__":
+
+    root = tk.Tk()
+    root.attributes("-fullscreen",True)
+    root.update()
+    wyjdz = tk.Button(root, text="Wyjscie", command=root.destroy)
+    wyjdz.place(x=root.winfo_width() - 200, y=root.winfo_height() - 100, width=170, height=50)
+    View = View(root)
+    root.mainloop()
+
     ward = Ward()
     ward.add_nurse(Nurse(0,"Janina", "Bąk",23,22,True))
     ward.add_nurse(Nurse(1,"Joanna", "Rabarbar",23,22,True))
@@ -32,13 +43,10 @@ def main():
     ward.add_constraint(Constraint(9,10))
     ward.add_constraint(Constraint(13,1))
 
-    handler = ScheduleHandler()
-    schedImported = handler.importer("schedule") #returns schedule object with imported data
-    weekImported = handler.importer("week")      #returns week object with imported data
-    MainSchedule1 = handler.generate(ward, schedImported) #returns schedule object with data generated using imported schedule
-    MainSchedule2 = handler.generate(ward, weekImported)  #returns schedule object with data generated using imported week
+    ScheduleHandler.importer("schedule") #returns schedule object with imported data
+    MainSchedule1 = ScheduleHandler.generate(ward) #returns schedule object with data generated using imported schedule
 
-    softchecker = ConstraintChecker(ward,MainSchedule1,weekImported) #checking soft constraints for MainSchedule1
+    softchecker = ConstraintChecker(ward,MainSchedule1,ScheduleHandler.imported) #checking soft constraints for MainSchedule1
     softchecker.check()
     weight = softchecker.get_totalWeight()      #total weight of unfulfilled soft constraints, less is better
 
@@ -47,5 +55,5 @@ def main():
     displayer.display()
     #displaying schedule MainSchedule1
 
-if __name__ == "__main__":
-    main()
+
+

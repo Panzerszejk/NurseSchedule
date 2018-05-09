@@ -10,7 +10,7 @@ class ScheduleHandler:
     imported = None
 
     @staticmethod
-    def importer(self, var):
+    def importer(var):
         imp = Importer()
         if var == "week":
             sched = Week()
@@ -25,12 +25,12 @@ class ScheduleHandler:
             print("No argument given")
 
     @staticmethod
-    def export(self, sched):  #sched is a class Schedule object
+    def export(sched):  #sched is a class Schedule object
         exp = Exporter()
         exp.export(sched)
 
     @staticmethod
-    def generate(self, ward):  #imported is a class Schedule or Week object, can be Null
+    def generate(ward):  #imported is a class Schedule or Week object, can be Null
         gen = Generator()
         if ScheduleHandler.imported is None:
             return gen.generate(ward)
@@ -38,10 +38,10 @@ class ScheduleHandler:
             return gen.generate(ward,ScheduleHandler.imported)
 
     @staticmethod
-    def accept(self):
+    def accept():
         pass
 
     @staticmethod
-    def clear(self):
+    def clear():
         pass
 
