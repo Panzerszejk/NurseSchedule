@@ -6,13 +6,18 @@ from .Schedule import Schedule
 
 
 class View(tk.Frame):
+    ward = Ward()
+
+    @staticmethod
+    def import_ward(ward):
+        View.ward=ward
+
     def __init__(self, master, *args, **kwargs):
         tk.Frame.__init__(self, master, *args, **kwargs)
         _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
         y=0
-        ward = Ward()
         for x in range(0,16):
-            nazwy = ward.print_initials(x)
+            nazwy = View.ward.print_initials(x)
             print(nazwy)
             nazwa = tk.Label(master,text=Array.tablica[x][0], bd=1, relief=SOLID)
             nazwa.place(x=260+y,y=50,width=40,height=20)

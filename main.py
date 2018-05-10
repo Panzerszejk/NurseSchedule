@@ -71,7 +71,7 @@ if __name__ == "__main__":
     displayer = ScheduleDisplayer(MainSchedule1)
     displayer.display()
     #displaying schedule MainSchedule1
-
+    View.import_ward(ward)
     View = View(root)
     root.mainloop()
 
