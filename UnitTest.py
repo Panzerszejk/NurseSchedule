@@ -6,6 +6,7 @@ from src.Ward import Ward
 from src.Nurse import Nurse
 from src.Constraint import Constraint
 
+
 class FirstSoftConstraint(unittest.TestCase):
     def setUp(self):
         self.schedule = Schedule()
@@ -83,6 +84,7 @@ class FirstSoftConstraint(unittest.TestCase):
         self.constchecker = ConstraintChecker(self.ward,self.schedule,self.imported)
         self.constchecker.check()
         self.assertEqual(self.constchecker.totalWeight, 16000)#16 non-full weekends coded in scheule table
+
 
 if __name__ == '__main__':
     unittest.main()
