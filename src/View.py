@@ -1,6 +1,8 @@
 from tkinter import *
 import tkinter as tk
 from .Array import Array
+from .Ward import Ward
+from .Schedule import Schedule
 
 
 class View(tk.Frame):
@@ -8,7 +10,10 @@ class View(tk.Frame):
         tk.Frame.__init__(self, master, *args, **kwargs)
         _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
         y=0
+        ward = Ward()
         for x in range(0,16):
+            nazwy = ward.print_initials(x)
+            print(nazwy)
             nazwa = tk.Label(master,text=Array.tablica[x][0], bd=1, relief=SOLID)
             nazwa.place(x=260+y,y=50,width=40,height=20)
             y=y+49
@@ -43,16 +48,4 @@ class View(tk.Frame):
                     lbl.configure(text="N")
                 else:
                     lbl.configure(text=3*" ")
-
-
-
-
-
-
-
-
-
-
-
-
 
