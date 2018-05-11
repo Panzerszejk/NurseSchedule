@@ -18,7 +18,3 @@ class Importer:
                 print(days)
         f.close()
         return days
-
-
-imp = Importer()
-imp.doimport()
