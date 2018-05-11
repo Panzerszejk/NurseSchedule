@@ -36,7 +36,7 @@ if __name__ == "__main__":
     ward.add_constraint(Constraint(9,10))
     ward.add_constraint(Constraint(13,1))
 
-    ScheduleHandler.importer("schedule") #returns schedule object with imported data
+    #ScheduleHandler.importer("schedule") #returns schedule object with imported data
     MainSchedule1 = ScheduleHandler.generate(ward) #returns schedule object with data generated using imported schedule
 
     softchecker = ConstraintChecker(ward,MainSchedule1,ScheduleHandler.imported) #checking soft constraints for MainSchedule1

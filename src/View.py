@@ -1,9 +1,9 @@
 from tkinter import *
 import tkinter as tk
-from .Array import Array
 from .Ward import Ward
 from .Schedule import Schedule
 from .ScheduleHandler import ScheduleHandler
+from .Week import Week
 from .Fill_Window import Fill_Window
 
 class View:
@@ -18,7 +18,7 @@ class View:
     def import_ward(ward):
         View.ward=ward
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
 
         root = tk.Tk()
         root.attributes("-fullscreen", True)
@@ -28,6 +28,11 @@ class View:
             highlightcolor = 'red', activebackground = 'red')
         wyjdz.place(x = root.winfo_width() - 35, y = 0,
             width = 35, height = 20)
+
+        minimalizuj = tk.Button(root, text = "_", command = root.withdraw()	)
+        minimalizuj.place(x = root.winfo_width() - 70, y = 0,
+            width = 35, height = 20)
+        #root.iconify()
 
         import_week = tk.Button(root, text = "Import week", command = lambda: ScheduleHandler.importer("week"))
         import_week.place(x = 1170, y = 100, width = 120, height = 50)
@@ -40,7 +45,6 @@ class View:
 
         clear = tk.Button(root, text = "Wyczyść", command = lambda: ScheduleHandler.clear())
         clear.place(x = 1170, y = 410, width = 120, height = 50)
-
 
         y=0
         for x in range(0,16):
@@ -63,7 +67,12 @@ class View:
         canvas.create_window((0,0),window=frame,anchor='nw')
         frame.bind("<Configure>",fun)
 
-        Fill_Window(self,frame)
+        _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
+        for x in range(0,35):
+            dni = tk.Label(frame, text=_dni[x%7])
+            dni.grid(row=x,column=0, ipadx=40, sticky='e')
+
+        #Fill_Window(self,frame)
 
         generate = tk.Button(root, text = "Generate", command = lambda: ScheduleHandler.generate(ward))
         generate.place(x = 1170, y = 340, width = 120, height = 50)
