@@ -1,5 +1,8 @@
 class Importer:
     def doimport(self):
+        # with open('test.txt','r') as f:
+        #     days = f.read()
+
         f = open('test.txt', 'r')
         days = []
         for line in f:
@@ -12,4 +15,9 @@ class Importer:
                     nurse.append(line[i])
                 days.append(nurse)
                 #print(days)
+        print(days)
         return days
+
+
+if __name__=='__main__':
+    Importer().doimport()
