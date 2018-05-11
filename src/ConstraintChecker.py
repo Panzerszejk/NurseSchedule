@@ -57,20 +57,25 @@ class ConstraintChecker:
                         nightseries=0
         #fifth constraint
         for nurse in range(16):
-            restcount = 0
-            eligableflag = False
-            for day in range(35):
+            restseries = 0
+            workseries = 0
+            for day in range(33):
                 currentday = self.schedule.scheduleList[day][nurse]
-                if currentday != '-':
-                    if restcount == 1:
+                if currentday == '-':
+                    restseries += 1
+                else:
+                    if restseries == 1 and workseries > 1:
+                        #print("constraint broken at day: "+str(day)+" nurse: "+str(nurse)+"current weight: "+str(self.totalWeight))
                         self.totalWeight += self.ward.constraints[2].weight
-                    restcount=0
+                        workseries = 0
                     if currentday != 'N':
-                        eligableflag = True
+                        workseries += 1
                     else:
-                        eligableflag = False
-                elif eligableflag:
-                    restcount+=1
+                        workseries = 0
+                    if restseries > 0:
+                        workseries = 0
+                    restseries = 0
+
         #seventh constraint
         for nurse in range(16):
             if self.ward.nurses[nurse].minShifts < 15:  #part-time nurses only
@@ -84,6 +89,7 @@ class ConstraintChecker:
                             self.totalWeight += self.ward.constraints[3].weight*(shiftonweekcount-3)
                         elif shiftonweekcount < 2:  #acceptable number is 2-3
                             self.totalWeight += self.ward.constraints[3].weight*(2-shiftonweekcount)
+                        #print("week has: "+str(shiftonweekcount))
                         shiftonweekcount = 0
         #ninth constraint
         for nurse in range(16):
@@ -119,7 +125,7 @@ class ConstraintChecker:
                 previousday = self.imported.importedSchedule[34][nurse]
             else:
                 previousday = None
-                print("Error, need data from previous schedule") #even false data will do
+                #print("Error, need data from previous schedule") #even false data will do
             for day in range(34): #1 day less
                 currentday = self.schedule.scheduleList[day][nurse]
                 if previousday == 'E' and currentday == 'N':
