@@ -1,5 +1,5 @@
 from .View import View
-from tkinter import Menu,filedialog
+from tkinter import Menu
 import tkinter as tk
 
 
@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     menubar = Menu(root)
     filemenu = Menu(menubar, tearoff=0)
-    filemenu.add_command(label="Import", command=lambda: )
+    filemenu.add_command(label="Import", command=lambda: ScheduleHandler.importer)
     menubar.add_cascade(label="File", menu=filemenu)
     master.config(menu=menubar)
 
@@ -22,8 +22,3 @@ if __name__ == '__main__':
 
 
     root.mainloop()
-
-
-    def ImportMenu(self):
-        filename =  filedialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("txt files","*.txt"),("all files","*.*")))
-        doimport(filename)

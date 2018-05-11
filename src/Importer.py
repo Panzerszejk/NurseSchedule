@@ -1,7 +1,10 @@
+from tkinter import filedialog
+
 class Importer:
-    @staticmethod
-    def doimport(self,filename):
+    def doimport(self):
+        filename =  filedialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("txt files","*.txt"),("all files","*.*")))
         f = open(filename, 'r')
+        #f = open("test.txt", 'r')
         days = []
         for line in f:
             print(line,len(line))
@@ -13,6 +16,7 @@ class Importer:
                     nurse.append(line[i])
                 days.append(nurse)
                 print(days)
+        f.close()
         return days
 
 
