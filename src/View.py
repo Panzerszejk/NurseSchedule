@@ -1,11 +1,13 @@
 from tkinter import *
 import tkinter as tk
-from .Array import Array
 from .Ward import Ward
 from .Schedule import Schedule
+from .ScheduleHandler import ScheduleHandler
+from .Week import Week
+from .Generator import Generator
+from .Fill_Window import Fill_Window
 
-
-class View(tk.Frame):
+class View:
     ward = Ward()
     sched = Schedule().scheduleList
 
@@ -17,20 +19,43 @@ class View(tk.Frame):
     def import_ward(ward):
         View.ward=ward
 
-    def __init__(self, master, *args, **kwargs):
-        tk.Frame.__init__(self, master, *args, **kwargs)
-        _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
+    def __init__(self):
+
+        root = tk.Tk()
+        root.attributes("-fullscreen", True)
+        root.update()
+
+        wyjdz = tk.Button(root, text = "X", command = root.destroy,
+            highlightcolor = 'red', activebackground = 'red')
+        wyjdz.place(x = root.winfo_width() - 35, y = 0,
+            width = 35, height = 20)
+
+
+        import_week = tk.Button(root, text = "Import week", command = lambda: ScheduleHandler.importer("week"))
+        import_week.place(x = 1170, y = 100, width = 120, height = 50)
+
+
+
+        # import_schedule = tk.Button(root, text = "Import schedule", command = lambda: ScheduleHandler.importer("schedule"))
+        # import_schedule.place(x = 1170, y = 170, width = 120, height = 50)
+
+        export_schedule = tk.Button(root, text = "Export", command = lambda: ScheduleHandler.export(Week().weekList))
+        export_schedule.place(x = 1170, y = 170, width = 120, height = 50)
+
+        clear = tk.Button(root, text = "Wyczyść", command = lambda: ScheduleHandler.clear())
+        clear.place(x = 1170, y = 410, width = 120, height = 50)
+
         y=0
         for x in range(0,16):
             nazwy = View.ward.print_initials(x)
-            nazwa = tk.Label(master,text=nazwy, bd=1, relief=SOLID)
+            nazwa = tk.Label(root,text=nazwy, bd=1, relief=SOLID)
             nazwa.place(x=260+y,y=50,width=40,height=20)
             y=y+49
 
         def fun(event):
-            canvas.configure(scrollregion=canvas.bbox("all"), width=970,height=self.master.winfo_height()-200)
+            canvas.configure(scrollregion=canvas.bbox("all"), width=970,height=root.winfo_height()-200)
 
-        na_dni = tk.Frame(master)
+        na_dni = tk.Frame(root)
         na_dni.place(x=100,y=100)
         canvas = Canvas(na_dni)
         frame = Frame(canvas)
@@ -41,20 +66,18 @@ class View(tk.Frame):
         canvas.create_window((0,0),window=frame,anchor='nw')
         frame.bind("<Configure>",fun)
 
+        # frame_na_zmiany = Frame(frame, bg="red")
+        # frame_na_zmiany.grid(row=4)
+
+        _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
         for x in range(0,35):
             dni = tk.Label(frame, text=_dni[x%7])
-            dni.grid(row=x,column=0, ipadx=40, sticky=E)
-            for i in range(0,16):
-                lbl = tk.Label(frame,relief=SOLID, bd=1)
-                lbl.grid(row=x,column=i+1,ipadx=18)
+            dni.grid(row=x,column=0, ipadx=40, sticky='e')
 
-                if str(View.sched[x][i]) == "D":
-                    lbl.configure(text="D")
-                elif str(View.sched[x][i]) == "E":
-                    lbl.configure(text="E")
-                elif str(View.sched[x][i]) == "N":
-                    lbl.configure(text="N")
-                elif str(View.sched[x][i]) == "L":
-                    lbl.configure(text="L")
-                else:
-                    lbl.configure(text=3*" ")
+        #Fill_Window(self,frame)
+
+        generate = tk.Button(root, text = "Generate", command = lambda: Fill_Window(View.ward,root,frame))
+        # generate = tk.Button(root, text = "Generate", command = lambda: ScheduleHandler.generate(ward))
+        generate.place(x = 1170, y = 340, width = 120, height = 50)
+
+        root.mainloop()
