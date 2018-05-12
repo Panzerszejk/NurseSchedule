@@ -6,7 +6,6 @@ from src.Week import Week
 from src.Constraint import Constraint
 from src.ConstraintChecker import ConstraintChecker
 from src.View import View
-import tkinter as tk
 
 
 if __name__ == "__main__":
@@ -17,7 +16,7 @@ if __name__ == "__main__":
     ward.add_nurse(Nurse(2,"Agnieszka","Hohenstein",23,22,True))
     ward.add_nurse(Nurse(3,"Ilona","Wojarska",23,22,True))
     ward.add_nurse(Nurse(4,"Adrianna","Markowska",23,22,True))
-    ward.add_nurse(Nurse(5,"Marianna","terkalska",23,22,True))
+    ward.add_nurse(Nurse(5,"Marianna","Terkalska",23,22,True))
     ward.add_nurse(Nurse(6,"Anna","Gronkiewicz",23,22,True))
     ward.add_nurse(Nurse(7,"Zofia","Górska",23,22,True))
     ward.add_nurse(Nurse(8,"Anastazja","Kuśmider",23,22,True))

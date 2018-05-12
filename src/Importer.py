@@ -13,10 +13,5 @@ class Importer:
                 for i in range(0, len(line)-1):
                     nurse.append(line[i])
                 days.append(nurse)
-        print(days)
         f.close()
         return days
-
-
-if __name__=='__main__':
-    Importer().doimport()
