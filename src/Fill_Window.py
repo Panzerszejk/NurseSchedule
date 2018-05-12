@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from .Schedule import Schedule
 from .Generator import Generator
 from .ScheduleHandler import ScheduleHandler
 
@@ -9,7 +10,9 @@ class Fill_Window:
 
         frame.destroy()
 
-        generator = None #Generator().generate(ward).importedWeek
+        sched = Schedule()
+        gen = Generator()
+        sched = gen.generate(ward)
 
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=970,height=root.winfo_height()-200)
@@ -31,36 +34,35 @@ class Fill_Window:
             dni.grid(row=x,column=0, ipadx=40, sticky='e')
 
         # Kod do testowania
-        #
-        # for x in range(0,35):
-        #     for i in range(0,16):
-        #         lbl = tk.Label(frame,relief='solid', bd=1)
-        #         lbl.grid(row=x,column=i+1,ipadx=18)
-        #
-        #         if str(ScheduleHandler.imported.importedWeek[x][i]) == "2":
-        #             lbl.configure(text="D")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "1":
-        #             lbl.configure(text="E")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "4":
-        #             lbl.configure(text="N")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "3":
-        #             lbl.configure(text="L")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "5":
-        #             lbl.configure(text="-")
-
 
         for x in range(0,35):
             for i in range(0,16):
                 lbl = tk.Label(frame,relief='solid', bd=1)
                 lbl.grid(row=x,column=i+1,ipadx=18)
-
-                if str(generator[x][i]) == "2":
-                    lbl.configure(text="D")
-                elif str(generator[x][i]) == "1":
+                if str(ScheduleHandler.imported.importedWeek[x][i]) == "1" or str(ScheduleHandler.imported.importedWeek[x][i]) == "E":
                     lbl.configure(text="E")
-                elif str(generator[x][i]) == "4":
-                    lbl.configure(text="N")
-                elif str(generator[x][i]) == "3":
+                elif str(ScheduleHandler.imported.importedWeek[x][i]) == "2" or str(ScheduleHandler.imported.importedWeek[x][i]) == "D":
+                    lbl.configure(text="D")
+                elif str(ScheduleHandler.imported.importedWeek[x][i]) == "3" or str(ScheduleHandler.imported.importedWeek[x][i]) == "L":
                     lbl.configure(text="L")
-                elif str(generator[x][i]) == "5":
+                elif str(ScheduleHandler.imported.importedWeek[x][i]) == "4" or str(ScheduleHandler.imported.importedWeek[x][i]) == "N":
+                    lbl.configure(text="N")
+                elif str(ScheduleHandler.imported.importedWeek[x][i]) == "5" or str(ScheduleHandler.imported.importedWeek[x][i]) == "-":
                     lbl.configure(text="-")
+
+"""
+        for x in range(0,35):
+            for i in range(0,16):
+                lbl = tk.Label(frame,relief='solid', bd=1)
+                lbl.grid(row=x,column=i+1,ipadx=18)
+                
+                if str(sched.scheduleList[x][i]) == "1":
+                    lbl.configure(text="E")
+                elif str(sched.scheduleList[x][i]) == "2":
+                    lbl.configure(text="D")
+                elif str(sched.scheduleList[x][i]) == "3":
+                    lbl.configure(text="L")
+                elif str(sched.scheduleList[x][i]) == "4":
+                    lbl.configure(text="N")
+                elif str(sched.scheduleList[x][i]) == "5":
+                    lbl.configure(text="-")"""
