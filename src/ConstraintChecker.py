@@ -57,25 +57,18 @@ class ConstraintChecker:
                         nightseries=0
         #fifth constraint
         for nurse in range(16):
-            restseries = 0
             workseries = 0
-            for day in range(33):
+            for day in range(34):
                 currentday = self.schedule.scheduleList[day][nurse]
-                if currentday == '-':
-                    restseries += 1
+                nextday = self.schedule.scheduleList[day+1][nurse]
+                if currentday != '-':
+                    workseries += 1
+                    if currentday == 'N':
+                        workseries = 0
                 else:
-                    if restseries == 1 and workseries > 1:
-                        #print("constraint broken at day: "+str(day)+" nurse: "+str(nurse)+"current weight: "+str(self.totalWeight))
+                    if nextday != '-' and workseries > 1:
                         self.totalWeight += self.ward.constraints[2].weight
-                        workseries = 0
-                    if currentday != 'N':
-                        workseries += 1
-                    else:
-                        workseries = 0
-                    if restseries > 0:
-                        workseries = 0
-                    restseries = 0
-
+                    workseries = 0
         #seventh constraint
         for nurse in range(16):
             if self.ward.nurses[nurse].minShifts < 15:  #part-time nurses only
