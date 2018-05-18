@@ -73,7 +73,7 @@ def assignNightShifts(sch):                 #dziala git
     else:
         return sch
     return sch
-
+#kiedy dorosne bede klasa Blocker
 def blockE(sched,i,j):
     if(sched.scheduleList[i][j] == '-'):
         return 'nE'
