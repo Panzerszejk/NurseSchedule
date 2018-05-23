@@ -76,7 +76,7 @@ class Schedule_test(unittest.TestCase):
                                       ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],
                                       ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],#35
                                       ]
-        self.assertEqual(self.zmienna, self.test_week.importedSchedule)
+        self.assertEqual(self.zmienna, self.test_shedule.importedSchedule)
 
 if __name__ == '__main__':
     unittest.main()
