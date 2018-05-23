@@ -3,7 +3,7 @@ from src.Week import Week
 
 class Week_test(unittest.TestCase):
     def test_week(self):
-        self.week_test = Week()
+        self.test_week = Week()
         self.test_week.importedWeek= [['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                                       # monday 1
                                       ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
