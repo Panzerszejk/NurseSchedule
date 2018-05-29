@@ -32,7 +32,6 @@ class View:
 
         import_week = tk.Button(root, text = "Import week", command = lambda: ScheduleHandler.importer("week"))
         import_week.place(x = 1170, y = 100, width = 120, height = 50)
-
         export_schedule = tk.Button(root, text = "Export", command = lambda: ScheduleHandler.export(Week().weekList))
         export_schedule.place(x = 1170, y = 170, width = 120, height = 50)
 
@@ -49,6 +48,7 @@ class View:
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=700,height=root.winfo_height()-200)
 
+
         na_dni = tk.Frame(root)
         na_dni.place(x=100,y=100)
         canvas = Canvas(na_dni)
@@ -60,7 +60,7 @@ class View:
         canvas.pack(side="left")
         canvas.create_window((0,0),window=frame,anchor='nw')
         frame.bind("<Configure>",fun)
-
+        
         _dni = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"]
         for x in range(0,35):
             dni = tk.Label(frame, text=_dni[x%7])

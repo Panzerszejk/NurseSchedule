@@ -11,3 +11,4 @@ class ReferenceTable:
             for j in range(3):
                 self.ref[temp][j] = 2
         self.display = ScheduleDisplayer(self)
+

@@ -31,3 +31,4 @@ class Ward:
 
     def print_initials(self,number):
         return self.nurses[number].name[0]+self.nurses[number].surname[0]
+

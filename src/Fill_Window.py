@@ -7,21 +7,17 @@ from .Generator import Generator
 from numpy import *
 
 class Fill_Window:
-
     def __init__(self,ward,root,frame):
 
         frame.destroy()
 
         self.lista_do_decodowania = []
         self.lista_na_elementy = []
-
-
         gen = Generator()
         sched = gen.generate(ward)
 
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=700,height=root.winfo_height()-200)
-
         na_dni = tk.Frame(root)
         na_dni.place(x=100,y=100)
         canvas = Canvas(na_dni)
