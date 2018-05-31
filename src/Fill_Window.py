@@ -13,7 +13,7 @@ class Fill_Window:
         sched = Schedule()
         gen = Generator()
         sched = gen.generate(ward)
-
+        print(sched.scheduleList)
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=970,height=root.winfo_height()-200)
 
@@ -33,8 +33,27 @@ class Fill_Window:
             dni = tk.Label(frame, text=_dni[x%7])
             dni.grid(row=x,column=0, ipadx=40, sticky='e')
 
-        # Kod do testowania
 
+        for x in range(0,35):
+            for i in range(0,16):
+                lbl = tk.Label(frame,relief='solid', bd=1)
+                lbl.grid(row=x,column=i+1,ipadx=18)
+                
+                if str(sched.scheduleList[x][i]) == "E":
+                    lbl.configure(text="E")
+                elif str(sched.scheduleList[x][i]) == "2":
+                    lbl.configure(text="D")
+                elif str(sched.scheduleList[x][i]) == "3":
+                    lbl.configure(text="L")
+                elif str(sched.scheduleList[x][i]) == "4":
+                    lbl.configure(text="N")
+                elif str(sched.scheduleList[x][i]) == "5":
+                    lbl.configure(text="-")
+
+
+
+                    # Kod do testowania
+"""
         for x in range(0,35):
             for i in range(0,16):
                 lbl = tk.Label(frame,relief='solid', bd=1)
@@ -50,19 +69,4 @@ class Fill_Window:
                 elif str(ScheduleHandler.imported.importedWeek[x][i]) == "5" or str(ScheduleHandler.imported.importedWeek[x][i]) == "-":
                     lbl.configure(text="-")
 
-"""
-        for x in range(0,35):
-            for i in range(0,16):
-                lbl = tk.Label(frame,relief='solid', bd=1)
-                lbl.grid(row=x,column=i+1,ipadx=18)
-                
-                if str(sched.scheduleList[x][i]) == "1":
-                    lbl.configure(text="E")
-                elif str(sched.scheduleList[x][i]) == "2":
-                    lbl.configure(text="D")
-                elif str(sched.scheduleList[x][i]) == "3":
-                    lbl.configure(text="L")
-                elif str(sched.scheduleList[x][i]) == "4":
-                    lbl.configure(text="N")
-                elif str(sched.scheduleList[x][i]) == "5":
-                    lbl.configure(text="-")"""
+   """

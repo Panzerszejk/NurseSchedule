@@ -58,7 +58,8 @@ class Checker:
         counter = 0
         for i in range(7):
             # print(week * 7 + i, j)
-            if sched.scheduleList[week * 7 + i][j] == 'E' or sched.scheduleList[week * 7 + i][j] == 'D' or sched.scheduleList[week * 7 + i][j] == 'L' or sched.scheduleList[week * 7 + i][j] == 'N':
+            if sched.scheduleList[week * 7 + i][j] == 'E' or sched.scheduleList[week * 7 + i][j] == 'D' \
+                    or sched.scheduleList[week * 7 + i][j] == 'L' or sched.scheduleList[week * 7 + i][j] == 'N':
                 counter +=1
         return counter
     # koniec checkerow
