@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import *
+from .LogsWindow import LogsWindow
+from src.ConstraintChecker import ConstraintChecker
 
 import numpy
 
@@ -159,3 +161,8 @@ class Fill_Window:
 
         decoderr = tk.Button(root, text = "Decode", command = lambda: decoder(frame))
         decoderr.place(x = 1170, y = 240, width = 120, height = 50)
+
+        softchecker = ConstraintChecker(ward,sched,None)
+        softchecker.check()
+        logs = tk.Button(root, text = "Constrains", command = lambda: LogsWindow(softchecker.infoTable))
+        logs.place(x = 1170, y = 290, width = 120, height = 50)
