@@ -1,122 +1,31 @@
 #from .Generator import Generator
+from .SymbolTable import SymbolTable
 from .Schedule import Schedule
 
 class Blocker:
     def blockE(self, sched,i,j):
-        if(sched.scheduleList[i][j] == '-'):
-            return 'nE'
-        if(sched.scheduleList[i][j] == 'nD'):
-            return 'nED'
-        if(sched.scheduleList[i][j] == 'nL'):
-            return 'nEL'
-        if(sched.scheduleList[i][j] == 'nN'):
-            return 'nEN'
-        if(sched.scheduleList[i][j] == 'nDL'):
-            return 'nEDL'
-        if(sched.scheduleList[i][j] == 'nDN'):
-            return'nEDN'
-        if(sched.scheduleList[i][j] == 'nLN'):
-            return 'nELN'
-        if(sched.scheduleList[i][j] == 'nDLN'):
-            return 'x'
-        if(sched.scheduleList[i][j] == 'E'):
-            return 'E'
-        if(sched.scheduleList[i][j] == 'D'):
-            return 'D'
-        if(sched.scheduleList[i][j] == 'L'):
-            return 'L'
-        if(sched.scheduleList[i][j] == 'N'):
-            return 'N'
-        if(sched.scheduleList[i][j] == 'x'):
-            return 'x'
-        return 'x'
+        symbol = sched.scheduleList[i][j]
+        index = SymbolTable.symbols.index(symbol)
+        sched.scheduleList[i][j] = SymbolTable.eSymbolsBlocked[index]
+        return sched
 
     def blockD(self, sched,i,j):
-        if(sched.scheduleList[i][j] == '-'):
-            return 'nD'
-        if(sched.scheduleList[i][j] == 'nE'):
-            return 'nED'
-        if(sched.scheduleList[i][j] == 'nL'):
-            return 'nDL'
-        if(sched.scheduleList[i][j] == 'nN'):
-            return 'nDN'
-        if(sched.scheduleList[i][j] == 'nEL'):
-            return 'nEDL'
-        if(sched.scheduleList[i][j] == 'nEN'):
-            return 'nEDN'
-        if(sched.scheduleList[i][j] == 'nLN'):
-            return 'nDLN'
-        if(sched.scheduleList[i][j] == 'nELN'):
-            return 'x'
-        if(sched.scheduleList[i][j] == 'E'):
-            return 'E'
-        if(sched.scheduleList[i][j] == 'D'):
-            return 'D'
-        if(sched.scheduleList[i][j] == 'L'):
-            return 'L'
-        if(sched.scheduleList[i][j] == 'N'):
-            return 'N'
-        if(sched.scheduleList[i][j] == 'x'):
-            return 'x'
-        return 'x'
+        symbol = sched.scheduleList[i][j]
+        index = SymbolTable.symbols.index(symbol)
+        sched.scheduleList[i][j] = SymbolTable.dSymbolsBlocked[index]
+        return sched
 
     def blockL(self, sched,i,j):
-        if(sched.scheduleList[i][j] == '-'):
-            return 'nL'
-        if(sched.scheduleList[i][j] == 'nE'):
-            return 'nEL'
-        if(sched.scheduleList[i][j] == 'nD'):
-            return 'nDL'
-        if(sched.scheduleList[i][j] == 'nN'):
-            return 'nLN'
-        if(sched.scheduleList[i][j] == 'nED'):
-            return 'nEDL'
-        if(sched.scheduleList[i][j] == 'nDN'):
-            return 'nDLN'
-        if(sched.scheduleList[i][j] == 'nEN'):
-            return 'nELN'
-        if(sched.scheduleList[i][j] == 'nEDL'):
-            return 'x'
-        if(sched.scheduleList[i][j] == 'E'):
-            return 'E'
-        if(sched.scheduleList[i][j] == 'D'):
-            return 'D'
-        if(sched.scheduleList[i][j] == 'L'):
-            return 'L'
-        if(sched.scheduleList[i][j] == 'N'):
-            return 'N'
-        if(sched.scheduleList[i][j] == 'x'):
-            return 'x'
-        return 'x'
+        symbol = sched.scheduleList[i][j]
+        index = SymbolTable.symbols.index(symbol)
+        sched.scheduleList[i][j] = SymbolTable.lSymbolsBlocked[index]
+        return sched
 
     def blockN(self, sched,i,j):
-        if(sched.scheduleList[i][j] == '-'):
-            return 'nN'
-        if(sched.scheduleList[i][j] == 'nE'):
-            return 'nEN'
-        if(sched.scheduleList[i][j] == 'nD'):
-            return 'nDN'
-        if(sched.scheduleList[i][j] == 'nL'):
-            return 'nLN'
-        if(sched.scheduleList[i][j] == 'nED'):
-            return 'nEDN'
-        if(sched.scheduleList[i][j] == 'nEL'):
-            return 'nELN'
-        if(sched.scheduleList[i][j] == 'nDL'):
-            return 'nDLN'
-        if(sched.scheduleList[i][j] == 'nEDL'):
-            return 'x'
-        if(sched.scheduleList[i][j] == 'E'):
-            return 'E'
-        if(sched.scheduleList[i][j] == 'D'):
-            return 'D'
-        if(sched.scheduleList[i][j] == 'L'):
-            return 'L'
-        if(sched.scheduleList[i][j] == 'N'):
-            return 'N'
-        if(sched.scheduleList[i][j] == 'x'):
-            return 'x'
-        return 'x'
+        symbol = sched.scheduleList[i][j]
+        index = SymbolTable.symbols.index(symbol)
+        sched.scheduleList[i][j] = SymbolTable.nSymbolsBlocked[index]
+        return sched
 
     def blockRow(self, sched, i, value):
         if value == 'E':

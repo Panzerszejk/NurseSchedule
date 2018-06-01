@@ -1,7 +1,18 @@
 from .Schedule import Schedule
+from .SymbolTable import SymbolTable
 
 class Checker:
     def checkE(self, sched, i ,j):
+        symbol = sched.scheduleList[i][j]
+        goofyList = [sched.scheduleList[i][j]]
+        result1 =  any(symbol in SymbolTable.occupiedSymbols  for symbol in goofyList)
+        result2 =  any(symbol in SymbolTable.notESymbols for symbol in goofyList)
+        if result1 and not result2:
+            return True
+        else:
+            return False
+
+    def oldCheckE(self, sched, i ,j):
         if(self.checkEmpty(sched,i,j) and (sched.scheduleList[i][j] != 'nE' and  sched.scheduleList[i][j] != 'nED' and sched.scheduleList[i][j] != 'nEL' and sched.scheduleList[i][j] != 'nEN' and sched.scheduleList[i][j] != 'nEDL' and sched.scheduleList[i][j] != 'nELN' and sched.scheduleList[i][j] != 'nEDN' and sched.scheduleList[i][j] != 'x')):
             return True
         else:
@@ -27,7 +38,7 @@ class Checker:
 
     def checkEmpty(self, sched, i, j):
         if(i < 35 or j < 16):
-            if(sched.scheduleList[i][j] == '-' or (sched.scheduleList[i][j] != 'E' and  sched.scheduleList[i][j] != 'D' and sched.scheduleList[i][j] != 'L' and sched.scheduleList[i][j] != 'N')):
+            if(sched.scheduleList[i][j] == '-' or (sched.scheduleList[i][j] != 'E' and  sched.scheduleList[i][j] != 'D' and sched.scheduleList[i][j] != 'L' and sched.scheduleList[i][j] != 'N' and sched.scheduleList[i][j] != 'x' )):
                 return True
         else:
             return False
