@@ -3,35 +3,53 @@ from .SymbolTable import SymbolTable
 
 class Checker:
     def checkE(self, sched, i ,j):
-        symbol = sched.scheduleList[i][j]
-        goofyList = [sched.scheduleList[i][j]]
-        result1 =  any(symbol in SymbolTable.occupiedSymbols  for symbol in goofyList)
-        result2 =  any(symbol in SymbolTable.notESymbols for symbol in goofyList)
-        if result1 and not result2:
-            return True
-        else:
-            return False
-
-    def oldCheckE(self, sched, i ,j):
-        if(self.checkEmpty(sched,i,j) and (sched.scheduleList[i][j] != 'nE' and  sched.scheduleList[i][j] != 'nED' and sched.scheduleList[i][j] != 'nEL' and sched.scheduleList[i][j] != 'nEN' and sched.scheduleList[i][j] != 'nEDL' and sched.scheduleList[i][j] != 'nELN' and sched.scheduleList[i][j] != 'nEDN' and sched.scheduleList[i][j] != 'x')):
+        symbol = sched.scheduleList[i]
+        goofyList = [sched.scheduleList[i]]
+        result1 =  any(symbol in goofyList for symbol in SymbolTable.occupiedSymbols)
+        result2 =  any(symbol in goofyList for symbol in SymbolTable.notESymbols)
+        #       ['-',  'E',   'D',   'L',   'N',   'nE',  'nD', 'nL', 'nN', 'nED', 'nEL', 'nEN','nDL','nDN','nLN','nDLN','nELN','nEDN','nEDL', 'x']
+        lista = [True, False, False, False, False, False, True, True, True, False, False, False, True, True, True, True, False, False, False, False]
+        cond = not(result1 or result2)
+        if cond:
             return True
         else:
             return False
 
     def checkD(self, sched, i ,j):
-        if(self.checkEmpty(sched,i,j)  and (sched.scheduleList[i][j] != 'nD' and  sched.scheduleList[i][j] != 'nED' and sched.scheduleList[i][j] != 'nDL' and sched.scheduleList[i][j] != 'nDN' and sched.scheduleList[i][j] != 'nEDL' and sched.scheduleList[i][j] != 'nDLN' and sched.scheduleList[i][j] != 'nEDN' and sched.scheduleList[i][j] != 'x')):
+        symbol = sched.scheduleList[i]
+        goofyList = [sched.scheduleList[i]]
+        result1 =  any(symbol in goofyList for symbol in SymbolTable.occupiedSymbols)
+        result2 =  any(symbol in goofyList for symbol in SymbolTable.notDSymbols)
+        #       ['-',  'E',   'D',   'L',   'N',   'nE',  'nD', 'nL', 'nN', 'nED', 'nEL', 'nEN','nDL','nDN','nLN','nDLN','nELN','nEDN','nEDL', 'x']
+        lista = [True, False, False, False, False, False, True, True, True, False, False, False, True, True, True, True, False, False, False, False]
+        cond = not(result1 or result2)
+        if cond:
             return True
         else:
             return False
 
     def checkL(self, sched, i ,j):
-        if(self.checkEmpty(sched,i,j) and (sched.scheduleList[i][j] != 'nL' and  sched.scheduleList[i][j] != 'nDL' and sched.scheduleList[i][j] != 'nEL' and sched.scheduleList[i][j] != 'nLN' and sched.scheduleList[i][j] != 'nELN' and sched.scheduleList[i][j] != 'nDLN' and sched.scheduleList[i][j] != 'nEDL' and sched.scheduleList[i][j] != 'x')):
+        symbol = sched.scheduleList[i]
+        goofyList = [sched.scheduleList[i]]
+        result1 =  any(symbol in goofyList for symbol in SymbolTable.occupiedSymbols)
+        result2 =  any(symbol in goofyList for symbol in SymbolTable.notLSymbols)
+        #       ['-',  'E',   'D',   'L',   'N',   'nE',  'nD', 'nL', 'nN', 'nED', 'nEL', 'nEN','nDL','nDN','nLN','nDLN','nELN','nEDN','nEDL', 'x']
+        lista = [True, False, False, False, False, False, True, True, True, False, False, False, True, True, True, True, False, False, False, False]
+        cond = not(result1 or result2)
+        if cond:
             return True
         else:
             return False
 
     def checkN(self, sched, i, j):
-        if(self.checkEmpty(sched,i,j) and (sched.scheduleList[i][j] != 'nN' and  sched.scheduleList[i][j] != 'nDN' and sched.scheduleList[i][j] != 'nLN' and sched.scheduleList[i][j] != 'nEN' and sched.scheduleList[i][j] != 'nEDN' and sched.scheduleList[i][j] != 'nELN' and sched.scheduleList[i][j] != 'nDLN' and sched.scheduleList[i][j] != 'x')):
+        symbol = sched.scheduleList[i]
+        goofyList = [sched.scheduleList[i]]
+        result1 =  any(symbol in goofyList for symbol in SymbolTable.occupiedSymbols)
+        result2 =  any(symbol in goofyList for symbol in SymbolTable.notNSymbols)
+        #       ['-',  'E',   'D',   'L',   'N',   'nE',  'nD', 'nL', 'nN', 'nED', 'nEL', 'nEN','nDL','nDN','nLN','nDLN','nELN','nEDN','nEDL', 'x']
+        lista = [True, False, False, False, False, False, True, True, True, False, False, False, True, True, True, True, False, False, False, False]
+        cond = not(result1 or result2)
+        if cond:
             return True
         else:
             return False
@@ -73,4 +91,3 @@ class Checker:
                     or sched.scheduleList[week * 7 + i][j] == 'L' or sched.scheduleList[week * 7 + i][j] == 'N':
                 counter +=1
         return counter
-    # koniec checkerow
