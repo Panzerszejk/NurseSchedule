@@ -283,7 +283,7 @@ class ConstraintChecker:
                         return -9,nurse
                 else:
                     workSeries = 0
-        return True
+        return 0
 
     def set_totalWeight(self,weight):
         self.totalWeight=weight
