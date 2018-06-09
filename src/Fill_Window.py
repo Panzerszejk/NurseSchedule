@@ -15,7 +15,7 @@ class Fill_Window:
         self.lista_na_elementy = []
         gen = Generator()
         sched = gen.generate(ward)
-
+        print(sched.scheduleList)
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=700,height=root.winfo_height()-200)
         na_dni = tk.Frame(root)
@@ -34,6 +34,7 @@ class Fill_Window:
         for x in range(0,35):
             dni = tk.Label(frame, text=_dni[x%7])
             dni.grid(row=x,column=0, ipadx=40, sticky='e')
+
 
         # Kod do testowania
         # for x in range(0,35):
@@ -69,6 +70,7 @@ class Fill_Window:
                     lbl.configure(text="N")
                 elif str(sched.scheduleList[x][i]) == "-":
                     self.lista_na_elementy.append('-')
+                    
                     lbl.configure(text="-")
             self.lista_do_decodowania.append(self.lista_na_elementy[:])
             self.lista_na_elementy.clear()

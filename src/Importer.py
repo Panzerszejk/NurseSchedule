@@ -6,7 +6,9 @@ class Importer:
         f = open(filename, 'r')
         days = []
         for line in f:
+
             if len(line) in [17, 8, 36]:
+
                 nurse = []
                 for i in range(0, len(line)-1):
                     nurse.append(line[i])
@@ -15,6 +17,7 @@ class Importer:
                 print("Nieprawidlowy format danych")
 
         f.close()
+
         dataform = DataFormat()
         days = dataform.decode(days)
         if len(days) == 16:
