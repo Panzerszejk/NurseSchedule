@@ -6,12 +6,19 @@ class Importer:
         f = open(filename, 'r')
         days = []
         for line in f:
-            if len(line) != 17:
-                print("Blad nie ma danych dla 16 pielegniarek")
-            else:
+            if len(line) in [17, 8, 36]:
                 nurse = []
                 for i in range(0, len(line)-1):
                     nurse.append(line[i])
                 days.append(nurse)
+            else:
+                print("Nieprawidlowy format danych")
+
         f.close()
-        return days
+        dataform = DataFormat()
+        days = dataform.decode(days)
+        if len(days) == 16:
+            daysTranspose = dataform.transpose()
+            return daysTranspose
+        else:
+            return days
