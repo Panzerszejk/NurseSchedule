@@ -5,6 +5,17 @@ from .Week import Week
 class ConstraintChecker:
     def __init__(self, ward = None, schedule = None, imported = None):
         self.totalWeight = 0
+        """
+        dla infotable pierwsza kolumna to numer constraina, 
+        druga kolumna to ilosc naruszen danego constraina, 
+        a trzecia kolumna to waga wszystkich tych naruszen dla poszczegolnego constraina
+        """
+        self.infoTable = [[1,0,0],
+                          [3,0,0],
+                          [5,0,0],
+                          [7,0,0],
+                          [9,0,0],
+                          [13,0,0]]
         self.schedule = schedule
         self.ward = ward
         self.imported = imported
@@ -28,6 +39,8 @@ class ConstraintChecker:
                         shiftcount += 1
                     if 2 > shiftcount > 0:
                         self.totalWeight += self.ward.constraints[0].weight
+                        self.infoTable[0][2] += self.ward.constraints[0].weight
+                        self.infoTable[0][1] += 1
         #third constraint
         for nurse in range(16):
             if self.ward.nurses[nurse].minShifts > 15:  #więcej od 15 bo pielęgniary pół-zmianowe mają max 13, dlaczego więc 15? bo tak
@@ -50,10 +63,16 @@ class ConstraintChecker:
                     else:
                         if nightseries == 1 or nightseries == 4:
                             self.totalWeight += self.ward.constraints[1].weight
+                            self.infoTable[1][2] += self.ward.constraints[1].weight
+                            self.infoTable[1][1] += 1
                         elif nightseries == 5:
                             self.totalWeight += self.ward.constraints[1].weight*2
+                            self.infoTable[1][2] += self.ward.constraints[1].weight*2
+                            self.infoTable[1][1] += 1
                         elif nightseries == 6:
                             self.totalWeight += self.ward.constraints[1].weight*3
+                            self.infoTable[1][2] += self.ward.constraints[1].weight*3
+                            self.infoTable[1][1] += 1
                         nightseries=0
         #fifth constraint
         for nurse in range(16):
@@ -68,6 +87,8 @@ class ConstraintChecker:
                 else:
                     if nextday != '-' and workseries > 1:
                         self.totalWeight += self.ward.constraints[2].weight
+                        self.infoTable[2][2] += self.ward.constraints[2].weight
+                        self.infoTable[2][1] += 1
                     workseries = 0
         #seventh constraint
         for nurse in range(16):
@@ -80,8 +101,12 @@ class ConstraintChecker:
                     if day % 7 == 6:  #niedziela
                         if shiftonweekcount > 3:
                             self.totalWeight += self.ward.constraints[3].weight*(shiftonweekcount-3)
+                            self.infoTable[3][2] += self.ward.constraints[3].weight*(shiftonweekcount-3)
+                            self.infoTable[3][1] += 1
                         elif shiftonweekcount < 2:  #acceptable number is 2-3
                             self.totalWeight += self.ward.constraints[3].weight*(2-shiftonweekcount)
+                            self.infoTable[3][2] += self.ward.constraints[3].weight*(2-shiftonweekcount)
+                            self.infoTable[3][1] += 1
                         #print("week has: "+str(shiftonweekcount))
                         shiftonweekcount = 0
         #ninth constraint
@@ -107,8 +132,12 @@ class ConstraintChecker:
                         if shiftcount > 0 and day != 0:  #avoiding situation when after imported shift series is rest day
                             if shiftcount > 3:
                                 self.totalWeight += self.ward.constraints[4].weight*(shiftcount-3)
+                                self.infoTable[4][2] += self.ward.constraints[4].weight*(shiftcount-3)
+                                self.infoTable[4][1] += 1
                             elif shiftcount < 2:  #acceptable number is 2-3
                                 self.totalWeight += self.ward.constraints[4].weight*(2-shiftcount)
+                                self.infoTable[4][2] += self.ward.constraints[4].weight*(2-shiftcount)
+                                self.infoTable[4][1] += 1
                         shiftcount = 0
         #thirteenth constraint
         for nurse in range(16):
@@ -123,6 +152,8 @@ class ConstraintChecker:
                 currentday = self.schedule.scheduleList[day][nurse]
                 if previousday == 'E' and currentday == 'N':
                     self.totalWeight += self.ward.constraints[5].weight
+                    self.infoTable[5][2] += self.ward.constraints[5].weight
+                    self.infoTable[5][1] += 1
                 previousday = currentday
 
     def get_totalWeight(self):
@@ -252,7 +283,7 @@ class ConstraintChecker:
                         return -9,nurse
                 else:
                     workSeries = 0
-        return True
+        return 0
 
     def set_totalWeight(self,weight):
         self.totalWeight=weight

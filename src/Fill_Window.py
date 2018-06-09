@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import *
-
-import numpy
-
+from .LogsWindow import LogsWindow
+from src.ConstraintChecker import ConstraintChecker
+from .ScheduleHandler import ScheduleHandler
 from .Generator import Generator
-from numpy import *
+#from numpy import *
 
 class Fill_Window:
     def __init__(self,ward,root,frame):
@@ -159,3 +159,9 @@ class Fill_Window:
 
         decoderr = tk.Button(root, text = "Decode", command = lambda: decoder(frame))
         decoderr.place(x = 1170, y = 240, width = 120, height = 50)
+
+        constchecker = ConstraintChecker(ward,sched,ScheduleHandler.imported)
+        constchecker.check()
+        hardbreach = constchecker.checkHard('all')
+        logs = tk.Button(root, text = "Constrains", command = lambda: LogsWindow(constchecker.infoTable,hardbreach))
+        logs.place(x = 1170, y = 290, width = 120, height = 50)

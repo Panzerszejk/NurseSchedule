@@ -1,4 +1,3 @@
-import numpy
 import random as ran
 from .ScheduleDisplayer import ScheduleDisplayer
 
