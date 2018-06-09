@@ -2,8 +2,6 @@ from .Schedule import Schedule
 from .Week import Week
 from .ReferenceTable import ReferenceTable
 from .Assigner import Assigner
-import numpy as np
-import random as ran
 import sys
 
 """
