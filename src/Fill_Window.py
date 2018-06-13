@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import *
 from .LogsWindow import LogsWindow
 from src.ConstraintChecker import ConstraintChecker
@@ -19,7 +20,10 @@ class Fill_Window:
         def fun(event):
             canvas.configure(scrollregion=canvas.bbox("all"), width=700,height=root.winfo_height()-200)
         na_dni = tk.Frame(root)
-        na_dni.place(x=100,y=100)
+        if root.winfo_width()>1920:
+            na_dni.place(x = root.winfo_width() / 2 - 700 / 2, y = 100)
+        else:
+            na_dni.place(x=root.winfo_width()/2-700*2/3,y=100)
         canvas = Canvas(na_dni)
         frame = Frame(canvas)
         scrollbar = Scrollbar(na_dni, orient=VERTICAL, command=canvas.yview)
@@ -35,22 +39,6 @@ class Fill_Window:
             dni = tk.Label(frame, text=_dni[x%7])
             dni.grid(row=x,column=0, ipadx=40, sticky='e')
 
-
-        # Kod do testowania
-        # for x in range(0,35):
-        #     for i in range(0,16):
-        #         lbl = tk.Label(frame,relief='solid', bd=1, font=("Consolas"))
-        #         lbl.grid(row=x,column=i+1,ipadx=10)
-        #         if str(ScheduleHandler.imported.importedWeek[x][i]) == "1" or str(ScheduleHandler.imported.importedWeek[x][i]) == "E":
-        #             lbl.configure(text="E")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "2" or str(ScheduleHandler.imported.importedWeek[x][i]) == "D":
-        #             lbl.configure(text="D")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "3" or str(ScheduleHandler.imported.importedWeek[x][i]) == "L":
-        #             lbl.configure(text="L")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "4" or str(ScheduleHandler.imported.importedWeek[x][i]) == "N":
-        #             lbl.configure(text="N")
-        #         elif str(ScheduleHandler.imported.importedWeek[x][i]) == "5" or str(ScheduleHandler.imported.importedWeek[x][i]) == "-":
-        #             lbl.configure(text="-")
 
         for x in range(0,35):
             for i in range(0,16):
@@ -82,7 +70,10 @@ class Fill_Window:
                 canvas.configure(scrollregion = canvas.bbox("all"), width = 700, height = root.winfo_height() - 200)
 
             na_dni = tk.Frame(root)
-            na_dni.place(x = 100, y = 100)
+            if root.winfo_width() > 1920:
+                na_dni.place(x = root.winfo_width() / 2 - 700 / 2, y = 100)
+            else:
+                na_dni.place(x = root.winfo_width() / 2 - 700 * 2 / 3, y = 100)
             canvas = Canvas(na_dni)
             frame = Frame(canvas)
             scrollbar = Scrollbar(na_dni, orient = VERTICAL, command = canvas.yview)
@@ -159,11 +150,18 @@ class Fill_Window:
                         continue
 
 
-        decoderr = tk.Button(root, text = "Decode", command = lambda: decoder(frame))
-        decoderr.place(x = 1170, y = 240, width = 120, height = 50)
+        decoderr = ttk.Button(root, text = "Decode", command = lambda: decoder(frame))
+        if root.winfo_width() > 1900:
+            decoderr.place(x = root.winfo_width() - 300, y = 240, width = 120, height = 50)
+        else:
+            decoderr.place(x = 1170, y = 240, width = 120, height = 50)
 
         constchecker = ConstraintChecker(ward,sched,ScheduleHandler.imported)
         constchecker.check()
         hardbreach = constchecker.checkHard('all')
         logs = tk.Button(root, text = "Constrains", command = lambda: LogsWindow(constchecker.infoTable,hardbreach))
-        logs.place(x = 1170, y = 290, width = 120, height = 50)
+        if root.winfo_width() > 1900:
+            logs.place(x = root.winfo_width() - 300, y = 310, width = 120, height = 50)
+        else:
+            logs.place(x = 1170, y = 310, width = 120, height = 50)
+
