@@ -1,4 +1,5 @@
 from tkinter import filedialog
+from src.DataFormat import DataFormat
 
 class Importer:
     def doimport(self):
@@ -20,8 +21,46 @@ class Importer:
 
         dataform = DataFormat()
         days = dataform.decode(days)
+
+
         if len(days) == 16:
-            daysTranspose = dataform.transpose()
-            return daysTranspose
+            daysTranspose = dataform.transpose(days)
         else:
-            return days
+            daysTranspose = days
+
+        k = 0
+        for j in range(len(daysTranspose[0])):
+            for i in range(len(daysTranspose)):
+                if daysTranspose[i][j] == "N":
+                    k = k + 1
+                    if k > 1:
+                        if (i + 1) <= (len(daysTranspose) - 1):
+                            if daysTranspose[i + 1][j] == "-":
+                                daysTranspose[i + 1][j] = "x"
+                                if daysTranspose[i + 2][j] == "-" and ((i + 2) <= (len(daysTranspose) - 1)):
+                                    daysTranspose[i + 2][j] = "x"
+                            else:
+                                continue
+                        else:
+                            k = 0
+                else:
+                    k = 0
+
+        k = 0
+        for j in range(len(daysTranspose[0])):
+            for i in range(len(daysTranspose)):
+                if (daysTranspose[i][j] != "-") and (daysTranspose[i][j] != "x") :
+                    k = k + 1
+                    if k > 4:
+                        if (i + 1) <= (len(daysTranspose) - 1):
+                            if daysTranspose[i + 1][j] == "-":
+                                daysTranspose[i + 1][j] = 'x'
+                                k = 0
+                            else:
+                                continue
+                        else:
+                            k = 0
+                else:
+                    k = 0
+
+        return daysTranspose
