@@ -294,30 +294,33 @@ class ConstraintChecker:
                     workSeries = 0
         return 0
 
-    def checkHarder(self,var=None):
-        if var == 'all':
+    def checkHarder(self):
+
             #all shifts covered
-            for day in range(35):
-                early = 0
-                day = 0
-                late = 0
-                night = 0
-                for nurse in range(16):
-                    currentday = self.schedule.scheduleList[day][nurse]
-                    if currentday == 'E':
-                        early += 1
-                    if currentday == 'D':
-                        day += 1
-                    if currentday == 'L':
-                        late += 1
-                    if currentday == 'N':
-                        night += 1
-                if day%7 == 5 or day%7 == 6: #sun and sat
-                    if early != 2 or day != 2 or late != 2 or night != 1:
-                        self.HardInfoTable[0][1] += 1
-                else:                       #mon - fri
-                    if early != 3 or day != 3 or late != 3 or night != 1:
-                        self.HardInfoTable[1][1] += 1
+        for day in range(35):
+            early_shift = 0
+            day_shift = 0
+            late_shift = 0
+            night_shift = 0
+            for nurse in range(16):
+                currentday = self.schedule.scheduleList[day][nurse]
+                if currentday == 'E':
+                    early_shift += 1
+                if currentday == 'D':
+                    day_shift += 1
+                if currentday == 'L':
+                    late_shift += 1
+                if currentday == 'N':
+                    night_shift += 1
+            if day%7 == 5 or day%7 == 6: #sun and sat
+                if early_shift != 2 or day_shift != 2 or late_shift != 2 or night_shift != 1:
+                    self.HardInfoTable[0][1] += 1
+                    print(day,early_shift,day_shift,late_shift,night_shift)
+            else:                       #mon - fri
+                if early_shift != 3 or day_shift != 3 or late_shift != 3 or night_shift != 1:
+                    self.HardInfoTable[1][1] += 1
+                    print(day,early_shift,day_shift,late_shift,night_shift)
+
         #number of shifts within limit and nightshifts
         for nurse in range(16):
             shifts = 0
@@ -352,6 +355,7 @@ class ConstraintChecker:
                 if currentday == 'L':
                     if nextday == 'E' or nextday == 'D':
                         self.HardInfoTable[5][1] += 1
+                        print("day "+str(day)+"   nurse "+str(nurse))
                 elif currentday == 'N':
                     if nextday == 'E' or nextday == 'D' or nextday == 'L':
                         self.HardInfoTable[6][1] += 1
