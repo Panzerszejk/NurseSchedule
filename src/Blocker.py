@@ -4,55 +4,55 @@ from .Schedule import Schedule
 
 class Blocker:
     def blockE(self, sched,i,j):
-        symbol = sched.scheduleList[i][j]
+        symbol = str(sched.scheduleList[i][j])
         index = SymbolTable.symbols.index(symbol)
         sched.scheduleList[i][j] = SymbolTable.eSymbolsBlocked[index]
         return sched
 
     def blockD(self, sched,i,j):
-        symbol = sched.scheduleList[i][j]
+        symbol = str(sched.scheduleList[i][j])
         index = SymbolTable.symbols.index(symbol)
         sched.scheduleList[i][j] = SymbolTable.dSymbolsBlocked[index]
         return sched
 
     def blockL(self, sched,i,j):
-        symbol = sched.scheduleList[i][j]
+        symbol = str(sched.scheduleList[i][j])
         index = SymbolTable.symbols.index(symbol)
         sched.scheduleList[i][j] = SymbolTable.lSymbolsBlocked[index]
         return sched
 
     def blockN(self, sched,i,j):
-        symbol = sched.scheduleList[i][j]
+        symbol = str(sched.scheduleList[i][j])
         index = SymbolTable.symbols.index(symbol)
         sched.scheduleList[i][j] = SymbolTable.nSymbolsBlocked[index]
         return sched
 
     def blockRow(self, sched, i, value):
-        if value == 'E':
+        if value == "E":
             for j in range(16):
-                sched.scheduleList[i][j] = self.blockE(sched,i,j)
-        if value == 'D':
+                sched = self.blockE(sched,i,j)
+        if value == "D":
             for j in range(16):
-                sched.scheduleList[i][j] = self.blockD(sched,i,j)
-        if value == 'L':
+                sched = self.blockD(sched,i,j)
+        if value == "L":
             for j in range(16):
-                sched.scheduleList[i][j] = self.blockL(sched,i,j)
-        if value == 'N':
+                sched = self.blockL(sched,i,j)
+        if value == "N":
             for j in range(16):
-                sched.scheduleList[i][j] = self.blockN(sched,i,j)
+                sched = self.blockN(sched,i,j)
         return sched
 
     def blockColumn(self, sched, j, value):
-        if value == 'E':
+        if value == "E":
             for i in range(35):
-                sched.scheduleList[i][j] = self.blockE(sched,i,j)
-        if value == 'D':
+                sched = self.blockE(sched,i,j)
+        if value == "D":
             for i in range(35):
-                sched.scheduleList[i][j] = self.blockD(sched,i,j)
-        if value == 'L':
+                sched = self.blockD(sched,i,j)
+        if value == "L":
             for i in range(35):
-                sched.scheduleList[i][j] = self.blockL(sched,i,j)
-        if value == 'N':
+                sched = self.blockL(sched,i,j)
+        if value == "N":
             for i in range(35):
-                sched.scheduleList[i][j] = self.blockN(sched,i,j)
+                sched = self.blockN(sched,i,j)
         return sched
