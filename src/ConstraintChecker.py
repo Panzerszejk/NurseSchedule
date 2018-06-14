@@ -16,6 +16,15 @@ class ConstraintChecker:
                           [7,0,0],
                           [9,0,0],
                           [13,0,0]]
+        self.HardInfoTable = [[1,0],
+                              [2,0],
+                              [3,0],
+                              [4,0],
+                              [5,0],
+                              [6,0],
+                              [7,0],
+                              [8,0],
+                              [9,0]]
         self.schedule = schedule
         self.ward = ward
         self.imported = imported
@@ -281,6 +290,109 @@ class ConstraintChecker:
                     if workSeries > 6:
                         print("work series too long for nurse:"+str(nurse)+" on day:"+str(day))
                         return -9,nurse
+                else:
+                    workSeries = 0
+        return 0
+
+    def checkHarder(self,var=None):
+        if var == 'all':
+            #all shifts covered
+            for day in range(35):
+                early = 0
+                day = 0
+                late = 0
+                night = 0
+                for nurse in range(16):
+                    currentday = self.schedule.scheduleList[day][nurse]
+                    if currentday == 'E':
+                        early += 1
+                    if currentday == 'D':
+                        day += 1
+                    if currentday == 'L':
+                        late += 1
+                    if currentday == 'N':
+                        night += 1
+                if day%7 == 5 or day%7 == 6: #sun and sat
+                    if early != 2 or day != 2 or late != 2 or night != 1:
+                        self.HardInfoTable[0][1] += 1
+                else:                       #mon - fri
+                    if early != 3 or day != 3 or late != 3 or night != 1:
+                        self.HardInfoTable[1][1] += 1
+        #number of shifts within limit and nightshifts
+        for nurse in range(16):
+            shifts = 0
+            nightshifts = 0
+            for day in range(35):
+                currentday = self.schedule.scheduleList[day][nurse]
+                if currentday != '-':
+                    shifts += 1
+                if currentday == 'N':
+                    nightshifts += 1
+            if shifts > self.ward.nurses[nurse].maxShifts:
+                self.HardInfoTable[2][1] += 1
+            if nightshifts > 3:
+                self.HardInfoTable[3][1] += 1
+        #weekends off duty
+        for nurse in range(16):
+            weekendoffduty = 0
+            for day in range(35):
+                if day%7 == 4: #jest piatek
+                    friday = self.schedule.scheduleList[day][nurse]
+                    saturday = self.schedule.scheduleList[day+1][nurse]
+                    sunday = self.schedule.scheduleList[day+2][nurse]
+                    if friday != 'N' and saturday == '-' and sunday == '-':
+                        weekendoffduty += 1
+            if weekendoffduty < 2:
+                self.HardInfoTable[4][1] += 1
+        #resting periods
+        for nurse in range(16):
+            for day in range(34):
+                currentday = self.schedule.scheduleList[day][nurse]
+                nextday = self.schedule.scheduleList[day+1][nurse]
+                if currentday == 'L':
+                    if nextday == 'E' or nextday == 'D':
+                        self.HardInfoTable[5][1] += 1
+                elif currentday == 'N':
+                    if nextday == 'E' or nextday == 'D' or nextday == 'L':
+                        self.HardInfoTable[6][1] += 1
+        #series of nightshifts rest and consecutive shifts limit
+        for nurse in range(16):
+            restRequired = False
+            restDays = 0
+            nightSeries = 0
+            workSeries = 0
+            for daysImport in range(7):  #checking last 7 days of previous schedule for night shift and work shift series
+                if isinstance(self.imported, Week):
+                    previousschedday = self.imported.importedWeek[6-daysImport][nurse]
+                elif isinstance(self.imported, Schedule):
+                    previousschedday = self.imported.importedSchedule[34-daysImport][nurse]
+                else:
+                    previousschedday = None
+                if previousschedday == 'N':
+                    nightSeries += 1
+                if previousschedday != '-':
+                    workSeries += 1
+                else:
+                    break
+            for day in range(35):
+                currentday = self.schedule.scheduleList[day][nurse]
+                if currentday == 'N':
+                    nightSeries += 1
+                else:                           #series broken
+                    if nightSeries > 1:
+                        restRequired = True
+                    nightSeries = 0
+                    if restRequired and currentday != '-':
+                        self.HardInfoTable[7][1] += 1
+                    elif restRequired:
+                        restDays += 1
+                        if restDays > 1:
+                            restRequired = False
+                            restDays = 0
+                if currentday != '-':
+                    workSeries += 1
+                    if workSeries > 6:
+                        self.HardInfoTable[8][1] += 1
                 else:
                     workSeries = 0
         return 0
